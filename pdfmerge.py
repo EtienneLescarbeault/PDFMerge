@@ -1,18 +1,24 @@
 import sys
 import os
-from PyPDF2 import PdfFileReader as pfr, PdfFileWriter as pfw
+from PyPDF2 import PdfFileReader, PdfFileMerger
 from PDFFile import File;
 
 def getPDFFiles():
     # return an array of constructed file objects
     # based on pdfs in current repository
     current_dir = os.getcwd()
-    pdf_files = []
-    pdf_files += [each for each in os.listdir(current_dir) 
+    pdf_file_names = []
+    pdf_file_names += [each for each in os.listdir(current_dir) 
         if (each.endswith('.pdf') or each.endswith('.PDF'))
     ]
-    print(pdf_files)
+    
+    pdf_files = []
+    for name in pdf_file_names:
+        fd = open(name, 'rb')
+        pdfReader = PdfFileReader(fd)
+        pdf_files += File(name, pdfReader)
 
+    return pdf_files
 
 
 def printPDFList(files:File = []):
@@ -25,9 +31,10 @@ def getFilesToConcat(indexArr:int = []):
     pass
 
 def concatPDFs(files:File = []):
+    merger = PdfFileMerger()
     pass
 
-def handleConcatFile(finalFile: File):
-    pass
+def handleConcatFile(outputName:str, mergedFile:PdfFileMerger):
+    mergedFile.write(outputName)
 
 getPDFFiles()
