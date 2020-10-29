@@ -1,4 +1,3 @@
-import sys
 import os
 from PyPDF2 import PdfFileReader, PdfFileMerger
 from PDFFile import File;
@@ -12,11 +11,11 @@ def getPDFFiles():
         if (each.endswith('.pdf') or each.endswith('.PDF'))
     ]
     
-    pdf_files = []
+    pdf_files:File = []
     for name in pdf_file_names:
         fd = open(name, 'rb')
         pdfReader = PdfFileReader(fd)
-        pdf_files += File(name, pdfReader)
+        pdf_files.append(File(name, pdfReader))
 
     return pdf_files
 
@@ -37,4 +36,5 @@ def concatPDFs(files:File = []):
 def handleConcatFile(outputName:str, mergedFile:PdfFileMerger):
     mergedFile.write(outputName)
 
-getPDFFiles()
+files = getPDFFiles()
+print(files)
