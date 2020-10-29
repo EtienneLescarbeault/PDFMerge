@@ -1,15 +1,23 @@
 import sys
-from PyPDF2 import PdfFileReader, PdfFileWriter
+import os
+from PyPDF2 import PdfFileReader as pfr, PdfFileWriter as pfw
 from PDFFile import File;
 
 def getPDFFiles():
     # return an array of constructed file objects
     # based on pdfs in current repository
-    pass
+    current_dir = os.getcwd()
+    pdf_files = []
+    pdf_files += [each for each in os.listdir(current_dir) 
+        if (each.endswith('.pdf') or each.endswith('.PDF'))
+    ]
+    print(pdf_files)
+
+
 
 def printPDFList(files:File = []):
-    # Print list 
-    # Generate a formatted list in the console
+    # Prints list 
+    # Generates a formatted list in the console
     pass
 
 def getFilesToConcat(indexArr:int = []):
@@ -17,8 +25,9 @@ def getFilesToConcat(indexArr:int = []):
     pass
 
 def concatPDFs(files:File = []):
-    # given in which order
     pass
 
 def handleConcatFile(finalFile: File):
     pass
+
+getPDFFiles()
