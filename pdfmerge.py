@@ -31,11 +31,16 @@ def printPDFList(file_names:str = []):
             out += "\n"
     print(out)
 
-def getFilesToConcat(index_group:str=[], file_names:str=[]):
+def getFilesToConcat(index_group:int=[], file_names:str=[]):
     # returns all the requested files to concat in order
-    pass
+    pdf_readers = []
+    for i in index_group:
+        fd = open(file_names[i]) # Add error control
+        pdf_readers.append(PdfFileReader(fd))
 
-def concatPDFs(files:File = []):
+    return pdf_readers
+
+def concatPDFs(files = []):
     merger = PdfFileMerger()
     pass
 
@@ -45,5 +50,10 @@ def handleConcatFile(outputName:str, mergedFile:PdfFileMerger):
 # Main script
 files = getPDFFiles()
 printPDFList(files)
+index_seq = input("Sequence of files to merge \n").split()
 
+# Add error control (NaN, bad number...)
+index_arr = [int(i-1) for i in index_seq]
+
+file_data = getFilesToConcat(index_arr, files)
 
