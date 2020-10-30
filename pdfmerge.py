@@ -26,7 +26,7 @@ def printPDFList(file_names:str = []):
     # Generates a formatted list in the console
     out = ""
     for i in range(len(file_names)):
-        out += '('+ str(i+1) + ')' + file_names[i] + "   " # 3 spaces
+        out += '('+ str(i+1) + ') ' + file_names[i] + "   " # 3 spaces
         if((i+1)%3 == 0):
             out += "\n"
     print(out)
