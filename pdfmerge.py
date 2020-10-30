@@ -11,21 +11,27 @@ def getPDFFiles():
         if (each.endswith('.pdf') or each.endswith('.PDF'))
     ]
     
-    pdf_files:File = []
+    """pdf_files:File = []
     for name in pdf_file_names:
         fd = open(name, 'rb')
         pdfReader = PdfFileReader(fd)
         pdf_files.append(File(name, pdfReader))
 
-    return pdf_files
+    return pdf_files"""
+    return pdf_file_names
 
 
-def printPDFList(files:File = []):
+def printPDFList(file_names:str = []):
     # Prints list 
     # Generates a formatted list in the console
-    pass
+    out = ""
+    for i in range(len(file_names)):
+        out += '('+ str(i+1) + ')' + file_names[i] + "   " # 3 spaces
+        if((i+1)%3 == 0):
+            out += "\n"
+    print(out)
 
-def getFilesToConcat(indexArr:int = []):
+def getFilesToConcat(index_group:str=[], file_names:str=[]):
     # returns all the requested files to concat in order
     pass
 
@@ -36,5 +42,8 @@ def concatPDFs(files:File = []):
 def handleConcatFile(outputName:str, mergedFile:PdfFileMerger):
     mergedFile.write(outputName)
 
+# Main script
 files = getPDFFiles()
-print(files)
+printPDFList(files)
+
+
