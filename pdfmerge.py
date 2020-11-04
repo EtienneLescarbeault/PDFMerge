@@ -1,6 +1,5 @@
 import os
 from PyPDF2 import PdfFileReader, PdfFileMerger
-from PDFFile import File;
 
 def getPDFFiles():
     # return an array of constructed file objects
@@ -10,14 +9,7 @@ def getPDFFiles():
     pdf_file_names += [each for each in os.listdir(current_dir) 
         if (each.endswith('.pdf') or each.endswith('.PDF'))
     ]
-    
-    """pdf_files:File = []
-    for name in pdf_file_names:
-        fd = open(name, 'rb')
-        pdfReader = PdfFileReader(fd)
-        pdf_files.append(File(name, pdfReader))
 
-    return pdf_files"""
     return pdf_file_names
 
 
