@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 from PyPDF2 import PdfFileReader, PdfFileMerger
 
 def getPDFFiles():
@@ -25,7 +26,6 @@ def printPDFList(file_names:str = []):
     print(out)
 
 def getConcatFiles(index_group:int=[], file_names:str=[]):
-    # returns all the requested files to concat in order
     merged_file = PdfFileMerger()
     for i in index_group:
         fd = open(file_names[i], 'rb') # Add error control
@@ -33,18 +33,40 @@ def getConcatFiles(index_group:int=[], file_names:str=[]):
 
     return merged_file
 
+def getFileIndicesInput(fileArrayLen:int):
+    index_arr = []
+    isValid = False
+    while not isValid: 
+        index_seq = input("Sequence of files to merge \n").split()
+        try:
+            for i in index_seq:
+                print(i)
+                index_arr.append(int(i)-1)
+            isValid = True
+        except:
+            print("Invalid input")
+            isValid = False
+        
+    return index_arr
 
-def handleConcatFile(outputName:str, mergedFile:PdfFileMerger):
-    mergedFile.write(outputName)
+
+def handleConcatFile(mergedFile:PdfFileMerger):
+    output_name = input("Output name: \n")
+    mergedFile.write(output_name + ".pdf")
+    mergedFile.close()
 
 # Main script
-print(sys.argv[1])
 files = getPDFFiles()
+files_length = len(files)
+if len(files) <= 0:
+    print("No PDF file found! Exiting...")
+    time.sleep(5)
+    sys.exit()
+
+
 printPDFList(files)
-index_seq = input("Sequence of files to merge \n").split()
-# Add error control (NaN, bad number...)
-index_arr = [int(i)-1 for i in index_seq]
+
+index_arr = getFileIndicesInput(files_length)
 merged_doc = getConcatFiles(index_arr, files)
-output_name = input("Output name: \n")
-merged_doc.write(output_name+".pdf")
-merged_doc.close()
+
+handleConcatFile(merged_doc)
