@@ -5,3 +5,4 @@ pyvenv.cfg
 .vscode
 *.pdf
 /__pycache__
+*.spec
