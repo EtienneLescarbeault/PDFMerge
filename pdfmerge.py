@@ -6,7 +6,7 @@ from PyPDF2 import PdfFileReader, PdfFileMerger
 def getPDFFiles():
     # return an array of constructed file objects
     # based on pdfs in current repository
-    current_dir = sys.argv[1]
+    current_dir = os.getcwd()  # sys.argv[1]
     pdf_file_names = []
     pdf_file_names += [each for each in os.listdir(current_dir)
                        if (each.endswith('.pdf') or each.endswith('.PDF'))]
@@ -40,20 +40,20 @@ def getConcatFiles(index_group: int = [], file_names: str = []):
 def getFileIndicesInput(fileArrayLen: int):
     index_arr = []
     isValid = False
-    while not isValid:
-        index_seq = input("Sequence of files to merge \n").split()
-        try:
-            for i in index_seq:
-                if i > fileArrayLen:
-                    raise Exception()
 
-                print(i)
-                index_arr.append(int(i)-1)
-            isValid = True
-        except Exception:
-            print("""Invalid input - Make sure to enter a valid
-            number sequence separated by spaces\n""")
-            isValid = False
+    while not isValid:
+        index_seq = input("Sequence of files to merge\n")
+        for id in index_seq:
+            print(id)
+            if id > fileArrayLen:
+                print("""Invalid input - Make sure to enter a valid
+                        number sequence separated by spaces\n""")
+                isValid = False
+                index_arr = []
+                index_seq = ""
+            else:
+                index_arr.append(int(id)-1)
+                isValid = True
     return index_arr
 
 
