@@ -37,26 +37,6 @@ def getConcatFiles(index_group: int = [], file_names: str = []):
     return merged_file
 
 
-def getFileIndicesInput(fileArrayLen: int):
-    index_arr = []
-    isValid = False
-
-    while not isValid:
-        index_seq = input("Sequence of files to merge\n")
-        for id in index_seq:
-            print(id)
-            if id > fileArrayLen:
-                print("""Invalid input - Make sure to enter a valid
-                        number sequence separated by spaces\n""")
-                isValid = False
-                index_arr = []
-                index_seq = ""
-            else:
-                index_arr.append(int(id)-1)
-                isValid = True
-    return index_arr
-
-
 def handleConcatFile(mergedFile: PdfFileMerger):
     output_name = input("Output name: \n")
     mergedFile.write(output_name + ".pdf")
@@ -75,7 +55,25 @@ if len(files) <= 0:
 
 printPDFList(files)
 
-index_arr = getFileIndicesInput(files_length)
+index_arr = []
+valid = False
+while not valid:
+    index_seq = input("Sequence of files to merge\n").split()
+    valid = True
+
+    for i in index_seq:
+        try:
+            file_num = int(i)
+            if file_num > files_length:
+                raise Exception()
+            index_arr.append(int(i)-1)
+        except Exception:
+            print("""Invalid input - Make sure to enter a valid
+                        number sequence separated by spaces\n""")
+            valid = False
+            index_seq = ""
+            index_arr = []
+
 merged_doc = getConcatFiles(index_arr, files)
 
 handleConcatFile(merged_doc)
