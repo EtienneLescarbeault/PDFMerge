@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 from PyPDF2 import PdfFileReader, PdfFileMerger
 
 
@@ -47,6 +48,7 @@ files = getPDFFiles()
 files_length = len(files)
 if len(files) <= 0:
     print("No PDF file found! Exiting...\n")
+    time.sleep(3)
     sys.exit()
 
 

@@ -1,5 +1,3 @@
-set dir=C:/Users/elesc/Desktop/PDFMerge/pdfmerge.py
+set dir=C:/Users/elesc/Desktop/PdfCat/pdfmerge.exe
 
-python %dir% %CD%
-
-PAUSE
+start %dir% %CD%
