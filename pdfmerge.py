@@ -4,8 +4,6 @@ from PyPDF2 import PdfFileReader, PdfFileMerger
 
 
 def getPDFFiles():
-    # return an array of constructed file objects
-    # based on pdfs in current repository
     current_dir = sys.argv[1]
     pdf_file_names = []
     pdf_file_names += [each for each in os.listdir(current_dir)
@@ -15,7 +13,6 @@ def getPDFFiles():
 
 
 def printPDFList(file_names: str = []):
-    # Prints list
     # Generates a formatted list in the console
     out = ""
     for i in range(len(file_names)):
@@ -60,6 +57,8 @@ valid = False
 while not valid:
     index_seq = input("Sequence of files to merge\n").split()
     valid = True
+    if len(index_seq) == 0:
+        valid = False
 
     for i in index_seq:
         try:
@@ -69,8 +68,7 @@ while not valid:
             index_arr.append(file_num-1)
         except Exception:
             print("Invalid input: " + str(i))
-            print(
-            """     - Make sure to enter a valid number sequence separated by spaces
+            print("""     - Make sure to enter a valid number sequence separated by spaces
      - The numbers must match the file indices
             """)
             printPDFList(files)
@@ -78,6 +76,6 @@ while not valid:
             index_seq = ""
             index_arr = []
 
-merged_doc = getConcatFiles(index_arr, files)
 
+merged_doc = getConcatFiles(index_arr, files)
 handleConcatFile(merged_doc)
