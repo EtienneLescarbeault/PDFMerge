@@ -20,7 +20,7 @@ def printPDFList(file_names: str = []):
         out += '(' + str(i+1) + ') ' + file_names[i] + "   "  # 3 spaces
         if((i + 1) % 3 == 0):
             out += "\n"
-    out += "\n(a) Merge all in presented order\n"
+    out += "\n(a) Merge all in ascending order\n"
     print(out)
 
 
