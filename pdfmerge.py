@@ -20,11 +20,13 @@ def printPDFList(file_names: str = []):
         out += '(' + str(i+1) + ') ' + file_names[i] + "   "  # 3 spaces
         if((i + 1) % 3 == 0):
             out += "\n"
+    out += "\n(a) Merge all in presented order\n"
     print(out)
 
 
 def getConcatFiles(index_group: int = [], file_names: str = []):
     merged_file = PdfFileMerger()
+    sys.stdout.write = "Merging...\n"
     for i in index_group:
         try:
             fd = open(file_names[i], 'rb')
@@ -32,6 +34,8 @@ def getConcatFiles(index_group: int = [], file_names: str = []):
         except Exception:
             print("Error: Could not open " + file_names[i])
             print("It will be ignored in the merging process. \n")
+    sys.stdout.flush()
+    sys.stdout.write = "Done!"
     return merged_file
 
 
@@ -54,13 +58,16 @@ if len(files) <= 0:
 
 printPDFList(files)
 
-index_arr = []
+index_arr = [] 
 valid = False
 while not valid:
     index_seq = input("Sequence of files to merge\n").split()
     valid = True
     if len(index_seq) == 0:
         valid = False
+
+    if 'a' in index_seq: # Option to merge all files in ascending order
+        index_seq = range(1, files_length)
 
     for i in index_seq:
         try:
@@ -81,3 +88,4 @@ while not valid:
 
 merged_doc = getConcatFiles(index_arr, files)
 handleConcatFile(merged_doc)
+sys.exit()
