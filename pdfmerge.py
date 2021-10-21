@@ -67,7 +67,7 @@ while not valid:
         valid = False
 
     if 'a' in index_seq: # Option to merge all files in ascending order
-        index_seq = range(1, files_length)
+        index_seq = range(1, files_length + 1)
 
     for i in index_seq:
         try:
